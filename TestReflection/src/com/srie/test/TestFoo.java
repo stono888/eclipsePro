@@ -11,7 +11,7 @@ package com.srie.test;
 public class TestFoo {
 
 	public static void main(String[] args) {
-		Foo foo = new Foo();
+		Foo foo = new Foo("a");
 		Class class1 = Foo.class;
 		Class class2 = foo.getClass();
 		Class class3 = null;
@@ -34,6 +34,12 @@ public class TestFoo {
 
 }
 class Foo{
+	public Foo(){
+		System.out.println("asdf");
+	}
+	public Foo(String a){
+		System.out.println("asdf:"+a);
+	}
 	void print(){
 		System.out.println("Foo");
 	}
