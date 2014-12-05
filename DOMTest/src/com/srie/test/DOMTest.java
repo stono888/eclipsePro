@@ -11,6 +11,7 @@ public class DOMTest {
 		//创建一个DocumentBuilder对象
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		//test
+		//test2
 		
 	}
 
