@@ -58,5 +58,23 @@ java的文本(char)是16位无符合整数；是字符unicode编码（双字节编码）
 	OutputStreamWriter 提供char流到byte流，按照编码处理；
 
 	FileReader/FileWriter
-  
+4）字符流的过滤器
+	BufferedReader ---> readLine 一次读一行  
+	BufferedWriter/PrintWriter ---> 写一行
   	
+3.对象的序列化、反序列化
+1）对象序列化，就是将object转换成byte序列，反之叫对象的反序列化  	
+2)序列化流(ObjectOutputStream)，是过滤流，---writeObject
+  反序列化流(ObjectInputStream)---readObject
+3)序列化接口(Serializable)
+  对象必须实现序列化接口，才能实现序列化，否则将出现异常；
+ 这个接口，没有任何方法，只是一个标准 
+4）transient关键字
+private void writeObject(java.io.ObjectOutputStream s)
+			throws java.io.IOException
+private void readObject(java.io.ObjectInputStream s)
+			throws java.io.IOException, ClassNotFoundException
+分析ArrayList源码中序列化和反序列化的问题；
+5)序列化中 子类和父类构造函数的调用问题						
+
+
