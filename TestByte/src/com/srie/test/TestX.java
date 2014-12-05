@@ -35,7 +35,13 @@ public class TestX {
 		System.out.println(0x7fffffff);
 		System.out.println(-1 >>> 1);
 		System.out.println(~14);
-		
+		/*
+		 * 求平均值
+		 */
+		int i1 = 100;
+		int i2 = 200;
+		System.out.println((i1 & i2) + ((i1 ^ i2) >> 1));
+
 	}
 
 }
