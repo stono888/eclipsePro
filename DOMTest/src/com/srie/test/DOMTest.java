@@ -10,6 +10,7 @@ public class DOMTest {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		//创建一个DocumentBuilder对象
 		DocumentBuilder db = dbf.newDocumentBuilder();
+		//test
 		
 	}
 
