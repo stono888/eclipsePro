@@ -30,8 +30,18 @@ public class SAXParserHandler extends DefaultHandler {
 						+ attributes.getQName(i));
 				System.out.println("---属性值是：" + attributes.getValue(i));
 			}
-		}else if(!qName.equals("book") && !qName.equals("bookstore")){
-			System.out.println("节点名是：" + qName);
+		} else if (!qName.equals("book") && !qName.equals("bookstore")) {
+			System.out.print("节点名是：" + qName);
+		}
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length)
+			throws SAXException {
+		super.characters(ch, start, length);
+		String value = new String(ch, start, length);
+		if (!value.trim().equals("")) {
+			System.out.println("---节点值是："+value);
 		}
 	}
 
