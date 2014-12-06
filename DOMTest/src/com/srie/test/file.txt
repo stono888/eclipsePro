@@ -1,0 +1,9 @@
+DOM中的节点类型
+节点类型	nodeType Named Constant nodeName返回值 nodeValue返回值
+Element  1	     ELEMENT_NODE   element name  null
+Attr     2		ATTRIBUTE_NODE  属性名称 			属性值
+Text     3		TEXT_NODE		#text			节点内容
+DOM解析把文件都加载到内存中；
+SAX解析使用Handler类进行逐个的解析；
+SAX解析原理
+使用Handler startElement endElement进行解析
