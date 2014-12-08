@@ -61,10 +61,57 @@ public class SAXTest {
 			handler.startDocument();
 			AttributesImpl attr = new AttributesImpl();
 			handler.startElement("", "", "bookStore", attr);
-			attr.clear();
-			attr.addAttribute("", "", "id", "", "1");
-			handler.startElement("", "", "book", attr);
-			handler.endElement("", "", "book");
+			for (Book book : bookList) {
+				attr.clear();
+				attr.addAttribute("", "", "id", "", book.getId());
+				handler.startElement("", "", "book", attr);
+				// 创建name节点
+				if (book.getName() != null && !book.getName().trim().equals("")) {
+					attr.clear();
+					handler.startElement("", "", "name", attr);
+					handler.characters(book.getName().toCharArray(), 0, book
+							.getName().toCharArray().length);
+					handler.endElement("", "", "name");
+				}
+				// 创建year节点
+				if (book.getYear() != null && !book.getYear().trim().equals("")) {
+					attr.clear();
+					handler.startElement("", "", "year", attr);
+					handler.characters(book.getYear().toCharArray(), 0, book
+							.getYear().toCharArray().length);
+					handler.endElement("", "", "year");
+				}
+				// 创建author节点
+				if (book.getAuthor() != null
+						&& !book.getAuthor().trim().equals("")) {
+					attr.clear();
+					handler.startElement("", "", "author", attr);
+					handler.characters(book.getAuthor().toCharArray(), 0, book
+							.getAuthor().toCharArray().length);
+					handler.endElement("", "", "author");
+				}
+				// 创建price节点
+				if (book.getPrice() != null
+						&& !book.getPrice().trim().equals("")) {
+					attr.clear();
+					handler.startElement("", "", "price", attr);
+					handler.characters(book.getPrice().toCharArray(), 0, book
+							.getPrice().toCharArray().length);
+					handler.endElement("", "", "price");
+				}
+				// 创建language节点
+				if (book.getLanguage() != null
+						&& !book.getLanguage().trim().equals("")) {
+					attr.clear();
+					handler.startElement("", "", "language", attr);
+					handler.characters(book.getLanguage().toCharArray(), 0,
+							book.getLanguage().toCharArray().length);
+					handler.endElement("", "", "language");
+				}
+
+				handler.endElement("", "", "book");
+
+			}
 			handler.endElement("", "", "bookStore");
 			// 关闭document
 			handler.endDocument();
