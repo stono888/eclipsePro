@@ -1,12 +1,21 @@
 package com.srie.test;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -14,15 +23,23 @@ import org.xml.sax.SAXException;
 
 public class DOMTest {
 
-	public static void main(String[] args) {
+	public DocumentBuilder getDocumentBuilder() {
 		// 创建一个DocumentBuilderFactory对象
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		// 创建一个DocumentBuilder对象
+		DocumentBuilder db = null;
 		try {
-			// 创建一个DocumentBuilder对象
-			DocumentBuilder db = dbf.newDocumentBuilder();
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		return db;
+	}
+
+	public void xmlParser() {
+		try {
 			// 通过DocumentBuilder对象的parse方法加载books.xml文件到当前项目下
-			Document document = db.parse("books.xml");
+			Document document = getDocumentBuilder().parse("books.xml");
 			// 获取所有book节点的集合
 			NodeList bookList = document.getElementsByTagName("book");
 			// 通过nodelist的getLength()方法可以获得bookList的长度
@@ -70,8 +87,8 @@ public class DOMTest {
 						System.out.println("--节点值是："
 								+ childNodes.item(k).getFirstChild()
 										.getNodeValue());
-//						System.out.println("--节点值是："
-//								+ childNodes.item(k).getTextContent());
+						// System.out.println("--节点值是："
+						// + childNodes.item(k).getTextContent());
 					}
 				}
 
@@ -79,13 +96,65 @@ public class DOMTest {
 						+ "本书的内容===================");
 			}
 
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 生成XML
+	 */
+	public void createXML() {
+		DocumentBuilder db = getDocumentBuilder();
+		Document document = db.newDocument();
+		document.setXmlStandalone(true);
+		Element bookStore = document.createElement("bookStore");
+		// 向bookStore根节点中添加子节点book
+		Element book = document.createElement("book");
+		book.setAttribute("id", "1");
+		Element name = document.createElement("name");
+		// name.setNodeValue("小王子");
+		name.setTextContent("小王子");
+		Element author = document.createElement("author");
+		author.setTextContent("乔治马丁");
+		Element price = document.createElement("price");
+		price.setTextContent("98");
+		Element year = document.createElement("year");
+		year.setTextContent("2006");
+		book.appendChild(author);
+		book.appendChild(name);
+		book.appendChild(price);
+		book.appendChild(year);
+		// 将book节点添加到bookStore中
+		bookStore.appendChild(book);
+		// 将bookStore节点（已经包含了book）添加到dom树中
+		document.appendChild(bookStore);
+
+		// 创建TransformerFactory对象
+		TransformerFactory tff = TransformerFactory.newInstance();
+		try {
+			// 创建Transformer对象
+			Transformer tf = tff.newTransformer();
+			tf.setOutputProperty(OutputKeys.INDENT, "yes");
+			tf.transform(new DOMSource(document), new StreamResult(new File(
+					"books1.xml")));
+
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void main(String[] args) {
+		// 创建DOMTest对象
+		DOMTest test = new DOMTest();
+		// 调用解析方法，解析XML文件
+		// test.xmlParser();
+		test.createXML();
 
 	}
 
