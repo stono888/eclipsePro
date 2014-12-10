@@ -54,7 +54,8 @@ public class IOUtil {
 		while ((bytes = in.read(buf, 0, buf.length)) != -1) {
 			int j = 1;
 			for (int i = 0; i < bytes; i++) {
-				if (buf[i] <= 0xf) {
+				// 如果使用buf[i]<0xf的时候，0xd7=11010111可能被解释成-41会小于0xf
+				if ((buf[i] & 0xf0) == 0) {
 					System.out.print("0");
 				}
 				System.out.print(Integer.toHexString(buf[i] & 0xff) + " ");
