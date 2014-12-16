@@ -1,5 +1,6 @@
 package com.srie.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,16 +9,94 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+
 import com.srie.bean.Message;
+import com.srie.db.DBAccess;
 
 /**
  * 和message表相关的操作都在这里
  */
 public class MessageDao {
+
 	/**
 	 * 根据查询条件查询消息列表
 	 */
 	public List<Message> queryMessagList(String command, String description) {
+		List<Message> messageList = new ArrayList<Message>();
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSesstion = null;
+		try {
+			sqlSesstion = dbAccess.getSqlSesstion();
+			Message message = new Message();
+			message.setCommand(command);
+			message.setDescription(description);
+			// 通过SqlSession执行SQL语句
+			messageList = sqlSesstion.selectList("Message.queryMessagList",
+					message);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSesstion != null) {
+				sqlSesstion.close();
+			}
+		}
+		return messageList;
+	}
+
+	public static void main(String[] args) {
+		MessageDao messageDao = new MessageDao();
+		messageDao.queryMessagList("", "");
+		// Logger log;
+		// log.debug("debug");
+		// log.info("info:");
+		// log.warn("war");
+		// log.error("err");
+	}
+
+	/**
+	 * 单条删除
+	 */
+	public void deleteOne(int id) {
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dbAccess.getSqlSesstion();
+			sqlSession.delete("Message.deleteOne", id);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	/**
+	 * 删除多条
+	 */
+	public void deleteBatch(List<Integer>  ids){
+		DBAccess dbAccess = new DBAccess();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dbAccess.getSqlSesstion();
+			sqlSession.delete("Message.deleteBatch", ids);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(sqlSession != null){
+				sqlSession.close();
+			}
+		}
+	}
+	/**
+	 * 根据查询条件查询消息列表
+	 */
+	public List<Message> queryMessagListJDBC(String command, String description) {
 		List<Message> messageList = new ArrayList<Message>();
 		Connection conn = null;
 		try {

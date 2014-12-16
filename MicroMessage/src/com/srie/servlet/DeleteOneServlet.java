@@ -7,18 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.srie.service.ListService;
+import com.srie.service.MaintainService;
 
 /**
- * �б�ҳ���ʼ������ Servlet implementation class ListServlet
+ * Servlet implementation class DeleteOneServlet
  */
-public class ListServlet extends HttpServlet {
+public class DeleteOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public ListServlet() {
+	public DeleteOneServlet() {
 	}
 
 	/**
@@ -30,17 +30,13 @@ public class ListServlet extends HttpServlet {
 		// 设置编码
 		request.setCharacterEncoding("UTF-8");
 		// 接收页面的值
-		String command = request.getParameter("command");
-		String description = request.getParameter("description");
-		// 向页面传值
-		request.setAttribute("command", command);
-		request.setAttribute("description", description);
-		ListService listService = new ListService();
-		// 查询消息列表并传给页面
-		request.setAttribute("messageList",
-				listService.queryMessagList(command, description));
+		String id = request.getParameter("id");
+		MaintainService maintainService = new MaintainService();
+		maintainService.deleteOne(id);
+		// 设置删除成功提示
+		request.setAttribute("delOK", "delOK");
 		// 向页面跳转
-		request.getRequestDispatcher("/WEB-INF/jsp/back/list.jsp").forward(
+		request.getRequestDispatcher("/List.action").forward(
 				request, response);
 	}
 

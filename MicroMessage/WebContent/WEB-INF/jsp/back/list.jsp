@@ -13,16 +13,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>内容列表页面</title>
 <link href="<%=basePath%>resources/css/all.css" rel="stylesheet">
+<script src="<%=basePath%>resources/js/jquery-1.10.1.js"></script>
+<script src="<%=basePath%>resources/js/list.js"></script>
 </head>
 <body>
 	<form action="<%=basePath%>List.action" id="mainForm" method="post">
 		<table>
 			<tbody>
 				<tr>
+					<td><input type="button" value="批量删除" onclick="delBatch('<%=basePath%>')"></td>
+					<td><input type="button" value="批量添加" ></td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" id="delOK" value="${delOK}">
+		<input type="hidden" id="delId" name="id">
+		<table>
+			<tbody>
+				<tr>
 					<td width="90" align="right">指令名称</td>
 					<td><input name="command" type="text" value="${command}" /></td>
 					<td width="90" align="right">指令描述</td>
-					<td><input name="description" type="text" value="${description}" /></td>
+					<td><input name="description" type="text"
+						value="${description}" /></td>
 					<td width="85" align="right"><input type="submit" value="查询"></td>
 				</tr>
 			</tbody>
@@ -30,7 +43,7 @@
 		<table align="center">
 			<tbody>
 				<tr>
-					<th><input type="checkbox" id="all" onclick="#" /></th>
+					<th><input type="checkbox" id="all" /></th>
 					<th>序号</th>
 					<th>指令名称</th>
 					<th>指令描述</th>
@@ -40,11 +53,12 @@
 			<c:forEach items="${messageList}" var="message" varStatus="status">
 				<tr
 					<c:if test="${status.index%2 ==1}">style='background-color:#ecf6ee;'</c:if>>
-					<td><input type="checkbox" /></td>
+					<td><input type="checkbox" name="ids" value="${message.id}" /></td>
 					<td>${status.index + 1}</td>
 					<td>${message.command}</td>
 					<td>${message.description}</td>
-					<td><a href="#">修改</a>&nbsp;&nbsp;&nbsp; <a href="#">删除</a></td>
+					<td><a href="#">修改</a>&nbsp;&nbsp;&nbsp; <a
+						onclick='delOne(${message.id},"<%=basePath%>")'>删除</a></td>
 				</tr>
 			</c:forEach>
 		</table>
