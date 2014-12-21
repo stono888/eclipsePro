@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 持久化映射文件（将java对象映射到数据库表） -->
+<hibernate-mapping>
+	<!-- name指定需要持久化的类，table指定需要映射的表名 -->
+	<class name="com.stono.pojo.Person" table="t_person">
+		<!-- id必须指定 name指定持久化类的持久化标识符名称 -->
+		<id name="id">
+			<!-- generator指定id生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<!-- property其他属性映射配置 name 指定持久化类中需要映射的属性名 column 指定表的列名（不写表示默认使用属性名） length 
+			指定列存储数据长度 type 指定列字段类型 -->
+
+		<property name="name" column="t_name"></property>
+		<property name="password" length="6"></property>
+		<property name="birthday"></property>
+	</class>
+</hibernate-mapping>
