@@ -1,24 +1,21 @@
 package com.srie.servlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.srie.service.QueryService;
-
 /**
- * �б�ҳ���ʼ������ Servlet implementation class ListServlet
+ * 对话页的初始化控制
  */
-public class ListServlet extends HttpServlet {
+public class InitTalkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public ListServlet() {
+	public InitTalkServlet() {
 	}
 
 	/**
@@ -27,20 +24,12 @@ public class ListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// 设置编码
-		request.setCharacterEncoding("UTF-8");
-		// 接收页面的值
-		String command = request.getParameter("command");
-		String description = request.getParameter("description");
-		// 向页面传值
-		request.setAttribute("command", command);
-		request.setAttribute("description", description);
-		QueryService listService = new QueryService();
-		// 查询消息列表并传给页面
-		request.setAttribute("messageList",
-				listService.queryMessagList(command, description));
-		// 向页面跳转
-		request.getRequestDispatcher("/WEB-INF/jsp/back/list.jsp").forward(
+
+		//设置编码
+		request.setCharacterEncoding("utf-8");
+		
+		//向页面跳转
+		request.getRequestDispatcher("/WEB-INF/jsp/front/talk.jsp").forward(
 				request, response);
 	}
 

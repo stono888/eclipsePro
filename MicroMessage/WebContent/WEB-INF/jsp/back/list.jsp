@@ -13,8 +13,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>内容列表页面</title>
 <link href="<%=basePath%>resources/css/all.css" rel="stylesheet">
-<script src="<%=basePath%>resources/js/jquery-1.10.1.js"></script>
-<script src="<%=basePath%>resources/js/list.js"></script>
+<script src="<%=basePath%>resources/js/common/jquery-1.10.1.js"></script>
+<script src="<%=basePath%>resources/js/back/list.js"></script>
 </head>
 <body>
 	<form action="<%=basePath%>List.action" id="mainForm" method="post">

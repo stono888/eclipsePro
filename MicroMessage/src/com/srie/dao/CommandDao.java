@@ -11,29 +11,30 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.srie.bean.Command;
 import com.srie.bean.Message;
 import com.srie.db.DBAccess;
 
 /**
- * 和message表相关的操作都在这里
+ * 与指令表对应的数据库操作
  */
-public class MessageDao {
+public class CommandDao {
 
 	/**
-	 * 根据查询条件查询消息列表
+	 * 根据查询条件查询指令列表
 	 */
-	public List<Message> queryMessagList(String command, String description) {
-		List<Message> messageList = new ArrayList<Message>();
+	public List<Command> queryCommandList(String name, String description) {
+		List<Command> commandList = new ArrayList<Command>();
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSesstion = null;
 		try {
 			sqlSesstion = dbAccess.getSqlSesstion();
-			Message message = new Message();
-			message.setCommand(command);
-			message.setDescription(description);
+			Command command = new Command();
+			command.setName(name);
+			command.setDescription(description);
 			// 通过SqlSession执行SQL语句
-			messageList = sqlSesstion.selectList("Message.queryMessagList",
-					message);
+			commandList = sqlSesstion.selectList("Command.queryCommandList",
+					command);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -42,7 +43,7 @@ public class MessageDao {
 				sqlSesstion.close();
 			}
 		}
-		return messageList;
+		return commandList;
 	}
 
 	public static void main(String[] args) {
@@ -77,7 +78,7 @@ public class MessageDao {
 	/**
 	 * 删除多条
 	 */
-	public void deleteBatch(List<Integer>  ids){
+	public void deleteBatch(List<Integer> ids) {
 		DBAccess dbAccess = new DBAccess();
 		SqlSession sqlSession = null;
 		try {
@@ -87,11 +88,12 @@ public class MessageDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(sqlSession != null){
+			if (sqlSession != null) {
 				sqlSession.close();
 			}
 		}
 	}
+
 	/**
 	 * 根据查询条件查询消息列表
 	 */
@@ -146,4 +148,5 @@ public class MessageDao {
 		}
 		return messageList;
 	}
+
 }
