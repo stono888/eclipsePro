@@ -13,7 +13,31 @@ public class HibernateTest3 {
 
 	public static void main(String[] args) {
 		// testUpdate3();
-		testUpdate4();
+		// testUpdate4();
+		testSaveOrUpdate();
+	}
+
+	/**
+	 * 新增或者更新；
+	 */
+	private static void testSaveOrUpdate() {
+		Configuration configure = new Configuration().configure();
+		// hibernate4推荐实现服务注册方式进行SessionFactory获取
+		ServiceRegistry registry = new ServiceRegistryBuilder().applySettings(
+				configure.getProperties()).buildServiceRegistry();
+		SessionFactory factory = configure.buildSessionFactory(registry);
+		Session session = factory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Person person = new Person();// 这是个临时对象；
+
+//		person.setId(5);
+		// person.setId(null); //如果设置为null，则进行新增；
+		// person.setId(50); //如果给定的id没有对应的记录，将报更新失败
+		person.setName("admin1ANULL");
+		// 新增或者更新，根据id是否存在，id存在就是更新，不存在就是更新；
+		session.saveOrUpdate(person);
+		transaction.commit();
+		session.close();
 	}
 
 	private static void testUpdate4() {
