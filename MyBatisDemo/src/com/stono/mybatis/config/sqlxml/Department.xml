@@ -13,6 +13,7 @@
 
 <mapper namespace="Department">
 
+	<!-- 查询Department返回的resultMap -->
 	<resultMap type="com.stono.mybatis.bean.Department" id="Department">
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
@@ -20,10 +21,18 @@
 		<result column="time1" jdbcType="TIMESTAMP" property="time1" />
 	</resultMap>
 
+	<!-- 查询Department对象的select语句 -->
 	<select id="queryDepartmentList" parameterType="com.stono.mybatis.bean.Department"
 		resultMap="Department">
 		select id,name,content1,time1 from department order by id
 	</select>
+
+	<insert id="insertDepartment" parameterType="com.stono.mybatis.bean.Department">
+		insert into
+		DEPARTMENT (id,content1,name,time1)
+		values(s_orga.nextval,#{content1},#{name},#{time1})
+	</insert>
+
 
 	<delete id="deleteOne" parameterType="int">
 		delete from message where

@@ -13,6 +13,11 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
  */
 public class DBAccess {
 
+	/**
+	 * 获取SqlSession对象；
+	 * @return
+	 * @throws IOException
+	 */
 	public SqlSession getSqlSession() throws IOException {
 		// 通过配置文件得到java.io.Reader对象，含有数据库信息
 		Reader reader = Resources

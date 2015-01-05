@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<context id="context1">
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@10.1.187.163:1521:ora11g1" userId="orga1"
+			password="orga1" />
+		<javaModelGenerator targetPackage="com.stono.mybatis.bean"
+			targetProject="MyBatisDemo" />
+		<sqlMapGenerator targetPackage="com.stono.mybatis.config.sqlxml"
+			targetProject="MyBatisDemo" />
+		<javaClientGenerator targetPackage="com.stono.mybatis.test"
+			targetProject="MyBatisDemo" type="XMLMAPPER" />
+		<table schema="orga1" tableName="department">
+		</table>
+		<table schema="orga1" tableName="person">
+		</table>
+
+	</context>
+</generatorConfiguration>
